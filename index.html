@@ -1,161 +1,511 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎂 Een verrassing voor jou!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
+<title>🎁 Een verrassing voor jou!</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ff77a9, #7b5cff, #38cfff);
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(
+            135deg,
+            #ff4f81,
+            #8b5cf6,
+            #00bfff
+        );
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    #start {
-      padding: 22px 40px;
-      font-size: 24px;
-      font-weight: bold;
-      border: none;
-      border-radius: 20px;
-      background: white;
-      color: #7b3cff;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      transition: transform .2s;
-      z-index: 10;
+    /* STARTKNOP */
+
+    #startKnop {
+        background: white;
+        color: #7c3aed;
+        border: none;
+        padding: 25px 45px;
+        border-radius: 20px;
+        font-size: clamp(20px, 4vw, 32px);
+        font-weight: bold;
+        cursor: pointer;
+
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
     }
 
-    #start:hover {
-      transform: scale(1.08);
+    #startKnop:hover {
+        transform: scale(1.08);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
+
+    /* FEESTTEKST */
 
     #feest {
-      display: none;
-      text-align: center;
-      color: white;
-      z-index: 5;
-      animation: binnen 0.7s ease-out;
+        display: none;
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 20px;
+        color: white;
     }
 
     #feest h1 {
-      font-size: clamp(50px, 10vw, 130px);
-      margin: 0;
-      text-shadow: 0 5px 20px rgba(0,0,0,.3);
+        margin: 0;
+        font-size: clamp(50px, 10vw, 140px);
+
+        text-shadow:
+            0 5px 0 #ff3b7a,
+            0 10px 25px rgba(0,0,0,0.35);
+
+        animation: spring 0.8s ease-out;
     }
 
-    #feest p {
-      font-size: clamp(25px, 4vw, 50px);
+    #feest h2 {
+        margin-top: 20px;
+        font-size: clamp(28px, 5vw, 60px);
+
+        text-shadow:
+            0 4px 15px rgba(0,0,0,0.3);
+
+        animation: verschijnen 1.5s ease;
     }
 
-    @keyframes binnen {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      70% {
-        transform: scale(1.2);
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+    @keyframes spring {
+
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        60% {
+            transform: scale(1.25);
+            opacity: 1;
+        }
+
+        80% {
+            transform: scale(0.9);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
+
+    @keyframes verschijnen {
+
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* CONFETTI */
 
     .confetti {
-      position: fixed;
-      top: -20px;
-      width: 12px;
-      height: 22px;
-      z-index: 20;
-      animation: vallen linear forwards;
+        position: fixed;
+        top: -30px;
+
+        width: 12px;
+        height: 22px;
+
+        z-index: 100;
+
+        animation-name: vallen;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
     }
 
     @keyframes vallen {
-      from {
-        transform: translateY(-10vh) rotate(0deg);
-      }
-      to {
-        transform: translateY(115vh) rotate(900deg);
-      }
+
+        0% {
+            transform:
+                translateY(-10vh)
+                rotate(0deg);
+        }
+
+        100% {
+            transform:
+                translateY(120vh)
+                rotate(1080deg);
+        }
     }
-  </style>
+
+    /* BALLONNEN */
+
+    .ballon {
+        position: fixed;
+        bottom: -150px;
+
+        width: 70px;
+        height: 90px;
+
+        border-radius: 50%;
+
+        opacity: 0.9;
+
+        animation: ballonOmhoog linear forwards;
+
+        z-index: 2;
+    }
+
+    .ballon::after {
+        content: "";
+        position: absolute;
+
+        left: 50%;
+        top: 88px;
+
+        width: 2px;
+        height: 100px;
+
+        background: rgba(255,255,255,0.7);
+    }
+
+    @keyframes ballonOmhoog {
+
+        from {
+            transform:
+                translateY(0)
+                rotate(-5deg);
+        }
+
+        to {
+            transform:
+                translateY(-130vh)
+                rotate(8deg);
+        }
+    }
+</style>
 </head>
 
 <body>
 
-<button id="start">🎁 Klik hier voor je verrassing</button>
+<button id="startKnop">
+    🎁 Klik hier voor je verrassing!
+</button>
 
 <div id="feest">
-  <h1>🎉 GEFELICITEERD! 🎉</h1>
-  <p>🥳🎂 Van harte gefeliciteerd! 🎂🥳</p>
+
+    <h1>
+        🎉 GEFELICITEERD! 🎉
+    </h1>
+
+    <h2>
+        🥳 Van harte gefeliciteerd! 🎂
+    </h2>
+
 </div>
 
-<audio id="muziek">
-  <!-- Zet hier je eigen legaal verkregen happy-birthday-muziekbestand neer -->
-  happy-birthday.mp3
-</audio>
-
 <script>
-  const knop = document.getElementById("start");
-  const feest = document.getElementById("feest");
-  const muziek = document.getElementById("muziek");
 
-  knop.addEventListener("click", () => {
-    knop.style.display = "none";
+/* ==============================================
+   START
+============================================== */
+
+const startKnop = document.getElementById("startKnop");
+const feest = document.getElementById("feest");
+
+startKnop.addEventListener("click", function () {
+
+    startKnop.style.display = "none";
     feest.style.display = "block";
 
-    muziek.play().catch(() => {});
+    startMuziek();
 
-    // Veel confetti 🎊
-    for (let i = 0; i < 250; i++) {
-      maakConfetti();
+    enormeConfettiExplosie();
+
+    maakBallonnen();
+
+    /* Blijf nog even confetti strooien */
+
+    const confettiRegen = setInterval(function () {
+
+        for (let i = 0; i < 15; i++) {
+            maakConfetti();
+        }
+
+    }, 300);
+
+    setTimeout(function () {
+        clearInterval(confettiRegen);
+    }, 15000);
+
+});
+
+
+/* ==============================================
+   CONFETTI
+============================================== */
+
+function enormeConfettiExplosie() {
+
+    for (let i = 0; i < 300; i++) {
+
+        setTimeout(function () {
+            maakConfetti();
+        }, Math.random() * 1500);
+
     }
 
-    // Nog een paar seconden door blijven strooien
-    const regen = setInterval(() => {
-      for (let i = 0; i < 15; i++) {
-        maakConfetti();
-      }
-    }, 250);
+}
 
-    setTimeout(() => clearInterval(regen), 10000);
-  });
 
-  function maakConfetti() {
-    const stukje = document.createElement("div");
-    stukje.className = "confetti";
+function maakConfetti() {
+
+    const confetti = document.createElement("div");
+
+    confetti.className = "confetti";
+
 
     const kleuren = [
-      "#ff1744",
-      "#ffea00",
-      "#00e676",
-      "#00b0ff",
-      "#d500f9",
-      "#ff9100"
+        "#ff1744",
+        "#ffea00",
+        "#00e676",
+        "#00b0ff",
+        "#d500f9",
+        "#ff9100",
+        "#ffffff",
+        "#ff69b4"
     ];
 
-    stukje.style.left = Math.random() * 100 + "vw";
-    stukje.style.background =
-      kleuren[Math.floor(Math.random() * kleuren.length)];
 
-    stukje.style.animationDuration =
-      (2 + Math.random() * 4) + "s";
+    confetti.style.left =
+        Math.random() * 100 + "vw";
 
-    stukje.style.transform =
-      `rotate(${Math.random() * 360}deg)`;
+    confetti.style.background =
+        kleuren[
+            Math.floor(
+                Math.random() * kleuren.length
+            )
+        ];
 
-    document.body.appendChild(stukje);
 
-    setTimeout(() => {
-      stukje.remove();
-    }, 6500);
-  }
+    confetti.style.animationDuration =
+        (2.5 + Math.random() * 4) + "s";
+
+
+    confetti.style.width =
+        (6 + Math.random() * 12) + "px";
+
+    confetti.style.height =
+        (10 + Math.random() * 20) + "px";
+
+
+    document.body.appendChild(confetti);
+
+
+    setTimeout(function () {
+        confetti.remove();
+    }, 7000);
+
+}
+
+
+/* ==============================================
+   BALLONNEN
+============================================== */
+
+function maakBallonnen() {
+
+    const kleuren = [
+        "#ff1744",
+        "#ffea00",
+        "#00e676",
+        "#00b0ff",
+        "#d500f9",
+        "#ff9100",
+        "#ff69b4"
+    ];
+
+
+    for (let i = 0; i < 18; i++) {
+
+        setTimeout(function () {
+
+            const ballon =
+                document.createElement("div");
+
+            ballon.className = "ballon";
+
+
+            ballon.style.left =
+                Math.random() * 95 + "vw";
+
+
+            ballon.style.background =
+                kleuren[
+                    Math.floor(
+                        Math.random() * kleuren.length
+                    )
+                ];
+
+
+            ballon.style.animationDuration =
+                (6 + Math.random() * 7) + "s";
+
+
+            document.body.appendChild(ballon);
+
+
+            setTimeout(function () {
+                ballon.remove();
+            }, 14000);
+
+        }, i * 350);
+
+    }
+
+}
+
+
+/* ==============================================
+   HAPPY BIRTHDAY-MELODIE
+
+   Geen MP3 nodig.
+   De browser maakt de tonen zelf.
+============================================== */
+
+function startMuziek() {
+
+    const AudioContext =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+
+    const audioContext =
+        new AudioContext();
+
+
+    /*
+       Noten
+    */
+
+    const C4 = 261.63;
+    const D4 = 293.66;
+    const E4 = 329.63;
+    const F4 = 349.23;
+    const G4 = 392.00;
+    const A4 = 440.00;
+    const Bb4 = 466.16;
+    const C5 = 523.25;
+
+
+    /*
+       Melodie
+       frequentie + lengte
+    */
+
+    const melodie = [
+
+        [G4, 0.35],
+        [G4, 0.20],
+        [A4, 0.55],
+        [G4, 0.55],
+        [C5, 0.55],
+        [Bb4, 0.85],
+
+        [G4, 0.35],
+        [G4, 0.20],
+        [A4, 0.55],
+        [G4, 0.55],
+        [C5, 0.55],
+        [Bb4, 0.85],
+
+        [G4, 0.35],
+        [G4, 0.20],
+        [G4 * 2, 0.55],
+        [E4 * 2, 0.55],
+        [C5, 0.55],
+        [Bb4, 0.55],
+        [A4, 0.85],
+
+        [F4 * 2, 0.35],
+        [F4 * 2, 0.20],
+        [E4 * 2, 0.55],
+        [C5, 0.55],
+        [D4 * 2, 0.55],
+        [C5, 1.0]
+
+    ];
+
+
+    let tijd =
+        audioContext.currentTime + 0.1;
+
+
+    melodie.forEach(function (noot) {
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const volume =
+            audioContext.createGain();
+
+
+        oscillator.type = "triangle";
+
+        oscillator.frequency.value =
+            noot[0];
+
+
+        /*
+           Volume zacht laten opkomen
+           en weer verdwijnen.
+        */
+
+        volume.gain.setValueAtTime(
+            0.0001,
+            tijd
+        );
+
+        volume.gain.exponentialRampToValueAtTime(
+            0.25,
+            tijd + 0.03
+        );
+
+        volume.gain.exponentialRampToValueAtTime(
+            0.0001,
+            tijd + noot[1]
+        );
+
+
+        oscillator.connect(volume);
+        volume.connect(audioContext.destination);
+
+
+        oscillator.start(tijd);
+
+        oscillator.stop(
+            tijd + noot[1] + 0.05
+        );
+
+
+        tijd += noot[1] + 0.07;
+
+    });
+
+}
+
 </script>
 
 </body>
